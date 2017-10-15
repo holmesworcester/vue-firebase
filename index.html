@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<title>Call for Net Neutrality</title>
+<script src="https://unpkg.com/vue"></script>
+
+<h1>Sign the petition for net neutrality</h1>
+
+<p>FCC Chair Ajit Pai is about to announce a vote to slash America's net neutrality rules&mdash;meaning companies like Comcast & Verizon will be able to block apps, slow websites, and charge fees to control what you see & do online. <strong>The Internet is amazing because with really minimal knowledge you can mess around with super powerful tools and make janky online petitions like this.</strong> Don't let them take that away from us. Sign the petition now.</p>
+
+<div id="app">
+  	<input v-on:keyup.enter="submit" type="text" v-model="name" placeholder="Enter your name">
+	<button v-on:click="submit">Sign petition</button>
+	<p>Your name will display on this page. <a href="http://fightforthefuture.org/privacy
+		">Privacy Policy</a></p>
+		<h2>Illustrious petition signers</h2>
+		<ul>
+			<li v-for="name in myData">{{ name.name }}</li>
+		</ul>
+</div>
+
+
+<h2>What *is* Net Neutrality? Why does it matter?</h2>
+
+<p><a href="http://battleforthenet.com">Visit battleforthenet.com to learn more.</a></p>
+
+<script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyARIIRIZOxAM56gVNQsgy3BYAtmkkiUWsE",
+    authDomain: "trying-vue-and-firebase.firebaseapp.com",
+    databaseURL: "https://trying-vue-and-firebase.firebaseio.com",
+    projectId: "trying-vue-and-firebase",
+    storageBucket: "",
+    messagingSenderId: "551507126011"
+  };
+  firebase.initializeApp(config);
+  var db = firebase.database()
+</script>
+
+  <!-- VueFire -->
+  <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+
+<script>
+'use strict'
+  new Vue({
+        el: "#app",
+        firebase: {
+        	myData: db.ref('/')
+        },
+        data: {
+			name: null        
+		},
+        methods: {
+        	// "submits" the number and changes the state (placeholder)
+        	submit: function () {
+        		// submits to firebase here
+      			this.$firebaseRefs.myData.push({
+      				name: this.name
+      			})
+        		// resets input field
+        		this.name = null
+    	}
+    }
+});
+</script>
+</html>
